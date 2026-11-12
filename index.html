@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090e19">
+  <meta name="description" content="NEON CLASH: STREET LEGENDS — juego de peleas 2D local con seis luchadores y poderes elementales.">
+  <title>NEON CLASH · STREET LEGENDS</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <div id="app">
+    <div class="texture"></div>
+    <header class="topbar">
+      <button type="button" class="wordmark" id="logoHome" aria-label="Volver al menú principal"><span>NEON</span><strong>CLASH</strong><small>STREET LEGENDS</small></button>
+      <div class="topbar-right"><span class="connection" id="controllerStatus"><i class="status-dot"></i> TECLADO LISTO</span><button class="icon-button" id="soundQuick" title="Activar o silenciar sonido" aria-label="Activar o silenciar sonido">♫</button></div>
+    </header>
+
+    <main>
+      <section id="homeScreen" class="screen active home-screen" aria-label="Menú principal">
+        <div class="home-copy">
+          <span class="eyebrow"><span class="eyebrow-line"></span> EL CHOQUE DE SEIS LEYENDAS</span>
+          <div class="hero-title"><span>NEON</span><span class="hero-clash">CLASH<span class="blink-dot">.</span></span></div>
+          <p class="hero-subtitle">STREET LEGENDS <span>—</span> 2D FIGHTING ARENA</p>
+          <p class="hero-description">Seis combatientes. Seis poderes. Una sola leyenda. Entra a la arena, domina tus combos y libera tu ataque definitivo.</p>
+          <div class="menu-options" role="group" aria-label="Modos de juego">
+            <button data-mode="arcade" class="menu-btn"><span class="menu-num">01</span><span class="menu-button-text"><b>ARCADE / HISTORIA</b><small>Enfréntate a cinco rivales de la IA</small></span><span class="menu-arrow">↗</span></button>
+            <button data-mode="versus" class="menu-btn"><span class="menu-num">02</span><span class="menu-button-text"><b>VERSUS LOCAL</b><small>Dos jugadores · teclado o mandos</small></span><span class="menu-arrow">↗</span></button>
+            <button data-mode="training" class="menu-btn"><span class="menu-num">03</span><span class="menu-button-text"><b>ENTRENAMIENTO</b><small>Practica técnicas y ataques definitivos</small></span><span class="menu-arrow">↗</span></button>
+            <button id="onlineSoon" class="menu-btn menu-muted"><span class="menu-num">04</span><span class="menu-button-text"><b>VERSUS ONLINE</b><small>Requiere servidor multijugador · no disponible</small></span><span class="menu-badge">PRÓXIMAMENTE</span></button>
+            <button id="openOptions" class="menu-btn"><span class="menu-num">05</span><span class="menu-button-text"><b>OPCIONES</b><small>Controles, mandos y preferencias</small></span><span class="menu-arrow">↗</span></button>
+          </div>
+          <p class="home-footer"><span class="tiny-square"></span> HECHO PARA JUGAR EN TU NAVEGADOR <span>·</span> VERSIÓN 1.0</p>
+        </div>
+        <div class="home-art" aria-hidden="true"><div class="hero-orbit orbit-1"></div><div class="hero-orbit orbit-2"></div><div class="hero-mark">VS</div><img class="hero-fighter fighter-back" src="assets/portraits/Alejandro.png" alt=""><img class="hero-fighter fighter-front" src="assets/portraits/Irving.png" alt=""><div class="hero-vertical-label">CHOOSE YOUR LEGEND — FIGHT FOR GLORY</div></div>
+      </section>
+
+      <section id="selectScreen" class="screen select-screen" aria-label="Selección de personajes">
+        <div class="section-heading"><button class="back-btn" id="selectBack">← VOLVER</button><span class="eyebrow">PREPARA TU COMBATE</span><h1>SELECCIONA TU <em>LEYENDA</em></h1><p id="selectInstructions">Elige al luchador del Jugador 1</p></div>
+        <div class="select-layout">
+          <div class="selection-preview preview-left" id="previewLeft"><div class="preview-accent"></div><span class="preview-kicker">JUGADOR 1</span><img id="previewImg1" alt="Personaje seleccionado"><h2 id="previewName1">—</h2><p id="previewRole1">SELECCIONA PERSONAJE</p><div class="preview-tag" id="previewPower1">PODER ELEMENTAL</div></div>
+          <div class="selection-center"><div id="fighterGrid" class="fighter-grid" role="group" aria-label="Personajes disponibles"></div><div class="stage-section"><span class="subheading">ESCENARIO</span><div class="stage-buttons" id="stageButtons"><button type="button" class="stage-btn selected" data-stage="alley">NEON ALLEY</button><button type="button" class="stage-btn" data-stage="rooftop">SKYLINE</button><button type="button" class="stage-btn" data-stage="subway">SUBWAY 07</button></div></div><div class="select-actions"><button class="primary-btn" id="fightStart" disabled>SELECCIONA UN PERSONAJE</button><span id="selectTip">Haz clic en un retrato para comenzar</span></div></div>
+          <div class="selection-preview preview-right" id="previewRight"><div class="preview-accent"></div><span class="preview-kicker" id="previewRightKicker">RIVAL</span><img id="previewImg2" alt="Rival seleccionado"><h2 id="previewName2">???</h2><p id="previewRole2">ESPERANDO CONTRINCANTE</p><div class="preview-tag" id="previewPower2">DESCONOCIDO</div></div>
+        </div>
+      </section>
+
+      <section id="versusScreen" class="screen versus-screen" aria-label="Presentación de combate"><span class="eyebrow">PRÓXIMO COMBATE <span id="matchCount"></span></span><div class="versus-chars"><div class="versus-side v-left"><img id="vsImg1" alt=""><h2 id="vsName1"></h2><p id="vsPower1"></p></div><div class="big-vs">V<span>S</span></div><div class="versus-side v-right"><img id="vsImg2" alt=""><h2 id="vsName2"></h2><p id="vsPower2"></p></div></div><p id="versusQuote" class="versus-quote"></p><div class="vs-bottom"><span id="vsStage">NEON ALLEY</span><button class="primary-btn" id="enterFight">¡A PELEAR! <span>↗</span></button></div></section>
+
+      <section id="fightScreen" class="screen fight-screen" aria-label="Arena de combate">
+        <div class="arena-wrap"><canvas id="gameCanvas" width="1280" height="720" aria-label="Combate 2D"></canvas>
+          <div class="fight-hud" aria-hidden="true"><div class="hud-top"><div class="hp-side hp-left"><div class="hud-id"><img id="hudPortrait1" alt=""><div><strong id="hudName1">JUGADOR 1</strong><span id="hudPlayer1">P1 · 0 VICTORIAS</span></div></div><div class="hp-track"><div id="hpFill1" class="hp-fill"></div><div class="hp-depleted" id="hpGhost1"></div></div><div class="round-pips" id="pips1"></div></div><div class="timer-box"><span id="timerValue">99</span><small id="timerLabel">ROUND 01</small></div><div class="hp-side hp-right"><div class="hud-id"><div><strong id="hudName2">JUGADOR 2</strong><span id="hudPlayer2">P2 · 0 VICTORIAS</span></div><img id="hudPortrait2" alt=""></div><div class="hp-track"><div id="hpFill2" class="hp-fill"></div><div class="hp-depleted" id="hpGhost2"></div></div><div class="round-pips" id="pips2"></div></div></div><div class="hit-streak streak-left" id="combo1"></div><div class="hit-streak streak-right" id="combo2"></div><div class="hud-bottom"><div class="meter-group"><span class="meter-label">P1 <em>SUPER METER</em></span><div class="meter-frame" id="meter1"></div><strong id="meterText1">0 CHARGES</strong></div><div class="fight-status" id="fightStatus">A / D · MOVER <span>·</span> J · PUÑO</div><div class="meter-group align-right"><span class="meter-label"><em>SUPER METER</em> P2</span><div class="meter-frame" id="meter2"></div><strong id="meterText2">0 CHARGES</strong></div></div></div>
+          <div class="arena-center-announcement" id="roundAnnouncement"><strong id="announcementTitle"></strong><p id="announcementSub"></p></div>
+          <div class="ultimate-overlay" id="ultimateOverlay"><div class="ultimate-slash"></div><span id="ultimatePlayer">ULTIMATE TECHNIQUE</span><strong id="ultimateName">OVERDRIVE</strong><span id="ultimateOwner"></span></div>
+          <button type="button" class="pause-button" id="pauseButton" aria-label="Pausar combate">Ⅱ</button>
+          <div class="pause-overlay" id="pauseOverlay"><div class="pause-panel"><span class="eyebrow">COMBATE INTERRUMPIDO</span><h2>PAUSA</h2><button id="resumeGame" class="primary-btn">CONTINUAR</button><button id="restartMatch" class="outline-btn">REINICIAR COMBATE</button><button id="quitToMenu" class="outline-btn">SALIR AL MENÚ</button></div></div>
+        </div>
+      </section>
+
+      <section id="resultScreen" class="screen result-screen" aria-label="Resultado del combate"><div class="result-card"><span id="resultTag" class="eyebrow">RESULTADO DEL COMBATE</span><h1 id="resultTitle">¡VICTORIA!</h1><img id="resultImg" src="" alt="Personaje vencedor"><h2 id="resultWinner">JUGADOR 1</h2><p id="resultDetail"></p><div class="result-actions"><button id="rematchBtn" class="primary-btn">REVANCHA</button><button id="resultCharacters" class="outline-btn">CAMBIAR PERSONAJES</button><button id="resultHome" class="outline-btn">MENÚ PRINCIPAL</button></div></div></section>
+
+      <section id="optionsScreen" class="screen options-screen" aria-label="Opciones"><div class="section-heading"><button class="back-btn" id="optionsBack">← VOLVER</button><span class="eyebrow">CONFIGURACIÓN</span><h1>PREPARA TU <em>CONTROL</em></h1><p>Personaliza tus teclas y botones. Se guardan automáticamente en este navegador.</p></div><div class="options-columns"><div class="options-panel"><h2>PREFERENCIAS</h2><label class="settings-row"><span>Sonidos de combate <small>Efectos de golpes y poderes sintetizados</small></span><input id="soundToggle" type="checkbox" checked></label><label class="settings-row"><span>Vibración visual <small>Movimiento de cámara al impactar</small></span><input id="shakeToggle" type="checkbox" checked></label><label class="settings-row"><span>Dificultad de la IA</span><select id="difficultySelect"><option value="easy">Fácil</option><option value="normal">Normal</option><option value="hard">Difícil</option></select></label><div class="gamepad-info"><span class="subheading">MANDOS DETECTADOS</span><p id="optionsPadInfo">Conecta un mando Xbox o PlayStation por USB o Bluetooth. La detección es automática.</p><p>Cruceta y joystick funcionan con zona muerta de 20 %. El control 1 es P1 y el control 2 es P2.</p></div></div><div class="options-panel controls-panel"><div class="controls-header"><h2>MAPEO DE ACCIONES</h2><div class="switch-tabs"><button data-bind-player="0" class="active">JUGADOR 1</button><button data-bind-player="1">JUGADOR 2</button></div></div><div class="binding-header"><span>ACCIÓN</span><span>TECLADO</span><span>MANDO</span></div><div id="bindingRows" class="binding-rows"></div><div class="binding-actions"><button id="resetBindings" class="outline-btn">RESTABLECER CONTROLES</button><span id="bindingMessage">Haz clic en una tecla o botón para reasignarlo.</span></div></div></div><div class="help-panel"><span class="subheading">TÉCNICAS DE COMBATE</span><p><b>Bloquear:</b> mantén la dirección contraria al rival. <b>Bloqueo bajo:</b> abajo + atrás. <b>Dash:</b> doble toque en una dirección. <b>EX:</b> fuerte + especial (1 carga). <b>Rompeguardia:</b> gasta 2 cargas. <b>Ultimate:</b> 3 cargas. <b>Agarre:</b> botón de agarre o golpe débil + patada débil. <b>ESC:</b> pausar.</p></div></section>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <footer id="siteFooter"><span>PRESS START TO BECOME A LEGEND</span><span>6 FIGHTERS <b>•</b> 3 ARENAS <b>•</b> LOCAL PLAY</span></footer>
+  </div>
+</body>
+</html>
